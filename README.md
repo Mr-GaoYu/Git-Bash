@@ -120,4 +120,4 @@
 
 可以检出 origin/master 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
 
-<a href="/1.png">
+<img src="/1.png">
