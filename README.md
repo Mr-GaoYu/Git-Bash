@@ -111,4 +111,13 @@
 
 - 如果 release 和 develop 分支都不存在未测试完毕的需求， 就直接在 develop 分支上修复完毕后，发布到 release 验证，后面流程与上线流程一致。
 
+## 提交代码的姿势
 
+### 检出远程仓库
+
+
+- git clone https://github.com/Mr-GaoYu/Git-Bash.git
+
+可以检出 origin/master 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
+
+<a href="/1.png">
