@@ -1,13 +1,14 @@
-2、下载NSSM：
+1、下载NSSM：
 https://nssm.cc/release/nssm-2.24.zip
 复制代码
-3、下载安装包
+2、下载安装包
 https://dl.gogs.io/0.12.3/gogs_0.12.3_windows_amd64.zip
 复制代码
-4、安装git for windows
+3、安装git for windows
 
-5、安装NSSM
+4、安装NSSM
 设置系统变量："控制面板" --> "系统和安全"--> "系统"--> "高级系统设置"--> "环境变量"--> "系统变量"-->"编辑系统变量"在"变量值"项目添加NSSM文件路径"D:\conanl\Downloads\nssm-2.24\nssm-2.24\win64"。路径安置的实际配置。
+
 6、安装gogs
 6.1、编辑系统安装文件：
 D:\conanl\Downloads\gogs_0.12.3_windows_amd64\gogs\scripts\windows\install-as-service.bat
