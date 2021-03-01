@@ -111,13 +111,66 @@
 
 - 如果 release 和 develop 分支都不存在未测试完毕的需求， 就直接在 develop 分支上修复完毕后，发布到 release 验证，后面流程与上线流程一致。
 
-## 提交代码的姿势
+## 检出代码的姿势
 
 ### 检出远程仓库
 
-
 - git clone https://github.com/Mr-GaoYu/Git-Bash.git
 
-可以检出 origin/master 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
+可以检出 origin/main 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
 
 <img src="/1.png">
+
+本地分支名为 main，关联的远程分支名为 origin/main（origin 是主机名，main 是分支名
+
+### 检出远程分支
+
+- 一个项目需要新建很多远程分支，以便于并行开发
+
+### 同步远程分支
+
+### 检出远程分支
+
+## 提交代码的姿势
+
+永远不要在一个本地分支上，连续提交代码。在多人协作的情况下，这会导致每笔提交之间存在依赖关系，进而可能导致 merge 冲突、cherry-pick 合入冗余代码。
+
+1. 暂存代码
+
+   git stash save [-u] 'update readme.md'
+
+   [-u] 表示参数可选，加 -u 会将本地新增文件也暂存，不加则仅暂存本地修改部分。'update readme.md' 为描述，下面列出 git stash 支持的所有操作：
+
+    <img src="/2.png">
+
+   - git stash list 显示所有暂存记录
+   - git stash show stash@{0} 查看指定的暂存记录
+   - git stash pop stash@{0} 弹出指定的暂存记录
+   - git stash drop stash@{0} 删除指定的暂存记录
+   - git stash clear 清空暂存记录
+
+2. 同步代码
+
+   git pull --rebase
+
+   <img src="/3.png">
+
+3. 弹出暂存代码
+
+   git stash pop [stash@{0}]
+
+   [stash@{0}] 表示可选，不加默认弹出栈顶元素，也可以指定弹出哪一个暂存记录。弹出结果如下：
+
+4. 新建本地分支
+
+根据不同功能新建不同的本地分支，比如 feature_shopping，bugfix_tombstone 等等，假设我们现在需要实现一个购物功能，我们应该使用 git checkout -b feature_shopping 新建一个本地分支来实现这个需求：
+
+   <img src="/4.png">
+
+5. 提交代码
+
+6. 追加提交
+
+7. 回退提交
+
+8. 推送代码
