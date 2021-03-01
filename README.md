@@ -111,13 +111,100 @@
 
 - 如果 release 和 develop 分支都不存在未测试完毕的需求， 就直接在 develop 分支上修复完毕后，发布到 release 验证，后面流程与上线流程一致。
 
-## 提交代码的姿势
+## 检出代码的姿势
 
 ### 检出远程仓库
 
-
 - git clone https://github.com/Mr-GaoYu/Git-Bash.git
 
-可以检出 origin/master 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
+可以检出 origin/main 分支到本地，这是 GitHub 创建仓库时默认的 主机名/分支名。使用 git branch -vv 查看本地分支状态
 
 <img src="/1.png">
+
+本地分支名为 main，关联的远程分支名为 origin/main（origin 是主机名，main 是分支名
+
+### 检出远程分支
+
+- 一个项目需要新建很多远程分支，以便于并行开发
+
+### 同步远程分支
+
+### 检出远程分支
+
+## 提交代码的姿势
+
+永远不要在一个本地分支上，连续提交代码。在多人协作的情况下，这会导致每笔提交之间存在依赖关系，进而可能导致 merge 冲突、cherry-pick 合入冗余代码。
+
+1. 暂存代码
+
+   git stash save [-u] 'update readme.md'
+
+   [-u] 表示参数可选，加 -u 会将本地新增文件也暂存，不加则仅暂存本地修改部分。'update readme.md' 为描述，下面列出 git stash 支持的所有操作：
+
+    <img src="/2.png">
+
+   - git stash list 显示所有暂存记录
+   - git stash show stash@{0} 查看指定的暂存记录
+   - git stash pop stash@{0} 弹出指定的暂存记录
+   - git stash drop stash@{0} 删除指定的暂存记录
+   - git stash clear 清空暂存记录
+
+2. 同步代码
+
+   git pull --rebase
+
+   <img src="/3.png">
+
+3. 弹出暂存代码
+
+   git stash pop [stash@{0}]
+
+   [stash@{0}] 表示可选，不加默认弹出栈顶元素，也可以指定弹出哪一个暂存记录。弹出结果如下：
+
+4. 新建本地分支
+
+根据不同功能新建不同的本地分支，比如 feature_shopping，bugfix_tombstone 等等，假设我们现在需要实现一个购物功能，我们应该使用 git checkout -b feature_shopping 新建一个本地分支来实现这个需求：
+
+   <img src="/4.png">
+
+5. 提交代码
+
+git commit -m "update README.md" 表示将修改提交到本地仓库，此时还没有推送到远程仓库。-m 后面的是修改描述，这是一种简便写法。
+
+  <img src="/5.png">
+
+6. 追加提交
+
+commit 之后，本地又修改了一些文件，此时需要使用 git commit --amend 追加提交：
+
+7. 回退提交
+
+commit 之后，发现提交多了，把不需要提交的也提交了，此时需要回退，有两种方式：
+
+git reset [--soft] commit_id，软回退，不会丢弃文件修改记录，--soft 不加也可以。
+git reset --hard commit_id，硬回退，丢弃所有修改。一般仅在需要回退到指定节点验证问题时使用。
+
+查看 commit_id：
+
+      git log -1
+
+-1 表示只查看提交记录里的最后一条：
+
+ <img src="/6.png">
+
+输入 git reset 22d92a412e7ed6e72ee2107db891e7571d307c81，即可回退提交。然后重新 git add <file>...，git commit。
+
+8. 推送代码
+
+commit 之后很多人就直接 git push 了，这是不对的，应当先同步代码。由于我们现在在新建的本地分支 feature_shopping 上，这个分支没有关联远程分支，所以无法也不应该使用 git pull --rebase 来同步代码。正确的操作为：
+
+    git checkout master：切到本地主分支
+    git pull --rebase：同步代码
+    git checkout feature_shopping：切换到本地需求分支
+    git rebase master：将本地主分支代码，合入到本地需求分支（可能有冲突，按照 Git 的提示修复即可）
+    git push origin HEAD:refs/for/master：将本地需求分支的提交推送到远程 master 分支
+
+注：
+git remote rm origin  
+git remote add origin git@github.com:user_name/user_repo.git  
+git push origin
