@@ -169,8 +169,37 @@
 
 5. 提交代码
 
+git commit -m "update README.md" 表示将修改提交到本地仓库，此时还没有推送到远程仓库。-m 后面的是修改描述，这是一种简便写法。
+
+  <img src="/5.png">
+
 6. 追加提交
+
+commit 之后，本地又修改了一些文件，此时需要使用 git commit --amend 追加提交：
 
 7. 回退提交
 
+commit 之后，发现提交多了，把不需要提交的也提交了，此时需要回退，有两种方式：
+
+git reset [--soft] commit_id，软回退，不会丢弃文件修改记录，--soft 不加也可以。
+git reset --hard commit_id，硬回退，丢弃所有修改。一般仅在需要回退到指定节点验证问题时使用。
+
+查看 commit_id：
+
+      git log -1
+
+-1 表示只查看提交记录里的最后一条：
+
+ <img src="/6.png">
+
+输入 git reset 22d92a412e7ed6e72ee2107db891e7571d307c81，即可回退提交。然后重新 git add <file>...，git commit。
+
 8. 推送代码
+
+commit 之后很多人就直接 git push 了，这是不对的，应当先同步代码。由于我们现在在新建的本地分支 feature_shopping 上，这个分支没有关联远程分支，所以无法也不应该使用 git pull --rebase 来同步代码。正确的操作为：
+
+    git checkout master：切到本地主分支
+    git pull --rebase：同步代码
+    git checkout feature_shopping：切换到本地需求分支
+    git rebase master：将本地主分支代码，合入到本地需求分支（可能有冲突，按照 Git 的提示修复即可）
+    git push origin HEAD:refs/for/master：将本地需求分支的提交推送到远程 master 分支
