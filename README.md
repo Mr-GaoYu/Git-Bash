@@ -203,3 +203,8 @@ commit 之后很多人就直接 git push 了，这是不对的，应当先同步
     git checkout feature_shopping：切换到本地需求分支
     git rebase master：将本地主分支代码，合入到本地需求分支（可能有冲突，按照 Git 的提示修复即可）
     git push origin HEAD:refs/for/master：将本地需求分支的提交推送到远程 master 分支
+
+注：
+git remote rm origin  
+git remote add origin git@github.com:user_name/user_repo.git  
+git push origin
